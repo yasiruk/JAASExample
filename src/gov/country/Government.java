@@ -1,6 +1,7 @@
 package gov.country;
 
 import gov.country.authentication.credentials.NuclearLaunchCodes;
+import gov.country.authentication.util.LoginConfig;
 import gov.country.authentication.util.StandardCallbackHandler;
 import gov.country.military.assets.ICBMMissle;
 
@@ -20,9 +21,10 @@ import java.util.Set;
 public class Government {
     public static void main(String[] args) {
         LoginContext lc = null;
-
+        Subject subject = null;
         try {
-            lc = new LoginContext("government", new StandardCallbackHandler());
+            //a fresh subject instance is parsed and a cusom login config instance is passed
+            lc = new LoginContext("government", subject, new StandardCallbackHandler(), new LoginConfig());
         } catch (LoginException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -35,17 +37,19 @@ public class Government {
             System.exit(-1);
         }
 
-        Subject subject = lc.getSubject();
+        subject = lc.getSubject();
 
 
         System.out.println("Logged in");
 
+
         //add the launchcode private credential to the private credentials set of the subject
         try {
+            final Subject finalSubject = subject;
             Subject.doAsPrivileged(subject, new PrivilegedExceptionAction<Set>() {
                 @Override
                 public Set run() throws Exception {
-                    Set privateCredentials = subject.getPrivateCredentials();
+                    Set privateCredentials = finalSubject.getPrivateCredentials();
                     privateCredentials.add(new NuclearLaunchCodes(1234));
                     System.out.println(privateCredentials.size());
                     return privateCredentials;
