@@ -17,4 +17,3 @@ If you are running the JAAS implementation from **cusom_login_config** branch th
 
 If you are running the JAAS implementation from **cusom_policy_config** branch then **do not** include any of these JVM parameters.
 
-    -Djava.security.manager -Djava.security.policy=security.policy
