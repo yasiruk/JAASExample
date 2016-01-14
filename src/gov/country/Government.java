@@ -25,7 +25,7 @@ import java.util.Set;
 
 public class Government {
 
-    private static final String POLICY_FILE="file:./empty.policy";
+    private static final String POLICY_FILE="file:./general.policy";
     public static void main(String[] args) {
         URL securityFileURL = null;
         try {
@@ -34,8 +34,8 @@ public class Government {
             e.printStackTrace();
         }
 
-//        Policy.setPolicy(new CustomPolicy(new InMemoryGovtPolicySource(),securityFileURL));
-        Policy.setPolicy(new CustomPolicy(new InMemoryGovtPolicySource()));
+        Policy.setPolicy(new CustomPolicy(new InMemoryGovtPolicySource(),securityFileURL));
+//        Policy.setPolicy(new CustomPolicy(new InMemoryGovtPolicySource()));
         System.setSecurityManager(new SecurityManager());
         LoginContext lc = null;
         Subject subject = null;
