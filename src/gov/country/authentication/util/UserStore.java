@@ -16,7 +16,7 @@ public class UserStore {
     private UserStore() {
         users = new HashMap<>();
         users.put("john", "test");
-        users.put("bill", "test");
+        users.put("harry", "test");
     }
     public String getPassword(String user) {
         return users.get(user);

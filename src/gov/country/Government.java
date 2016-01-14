@@ -3,12 +3,17 @@ package gov.country;
 import gov.country.authentication.credentials.NuclearLaunchCodes;
 import gov.country.authentication.util.LoginConfig;
 import gov.country.authentication.util.StandardCallbackHandler;
+import gov.country.authorization.policy.CustomPolicy;
+import gov.country.authorization.policysource.InMemoryGovtPolicySource;
 import gov.country.military.assets.ICBMMissle;
 
 
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.Policy;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
@@ -19,9 +24,22 @@ import java.util.Set;
  */
 
 public class Government {
+
+    private static final String POLICY_FILE="file:./empty.policy";
     public static void main(String[] args) {
+        URL securityFileURL = null;
+        try {
+            securityFileURL = new URL(POLICY_FILE);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+//        Policy.setPolicy(new CustomPolicy(new InMemoryGovtPolicySource(),securityFileURL));
+        Policy.setPolicy(new CustomPolicy(new InMemoryGovtPolicySource()));
+        System.setSecurityManager(new SecurityManager());
         LoginContext lc = null;
         Subject subject = null;
+
         try {
             //a fresh subject instance is parsed and a cusom login config instance is passed
             lc = new LoginContext("government", subject, new StandardCallbackHandler(), new LoginConfig());
@@ -30,6 +48,8 @@ public class Government {
             System.exit(-1);
         }
 
+        System.out.println("john (pw test) is the president.");
+        System.out.println("harry (pw test) is a cabinet member");
         try {
             lc.login();
         } catch (LoginException e) {

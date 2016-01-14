@@ -21,7 +21,6 @@ public class LaunchCodePermission extends BasicPermission{
     }
 
 
-
     @Override
     public int hashCode() {
         return 0;

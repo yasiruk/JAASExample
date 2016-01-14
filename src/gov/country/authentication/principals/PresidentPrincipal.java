@@ -28,4 +28,9 @@ public class PresidentPrincipal implements Principal {
 
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof PresidentPrincipal) && (name == ((PresidentPrincipal)obj).getName());
+    }
 }

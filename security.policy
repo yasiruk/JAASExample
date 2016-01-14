@@ -3,13 +3,14 @@ grant {
     permission javax.security.auth.AuthPermission "doAsPrivileged";
     permission javax.security.auth.AuthPermission "createLoginContext.government";
     permission javax.security.auth.AuthPermission "modifyPrincipals";
-
+    permission java.lang.RuntimePermission "accessClassInPackage.sun.security.provider";
+    permission java.security.SecurityPermission "setPolicy";
+    permission java.lang.RuntimePermission "getProtectionDomain";
 };
 
 grant principal gov.country.authentication.principals.PresidentPrincipal "john" {
     permission javax.security.auth.PrivateCredentialPermission "* gov.country.authentication.principals.PresidentPrincipal \"john\"", "read";
     permission javax.security.auth.AuthPermission "modifyPrivateCredentials";
-
     permission gov.country.permissions.LaunchCodePermission "icbm";
     permission gov.country.military.permissions.MissileLaunchPermission "icbm", "prepare,launch,abort";
 };

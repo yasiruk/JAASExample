@@ -12,6 +12,7 @@ public class ICBMMissle {
     public ICBMMissle() {
         prepared = false;
         launched = false;
+
     }
 
     public void launch() throws ICBMExecption {
